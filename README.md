@@ -26,3 +26,10 @@ _GO project_
 * TheMovieDB API key ( https://www.themoviedb.org/settings/api )
 * Notion Account ( https://www.notion.so )
 * Notion API Key ( https://www.notion.so/my-integrations )
+
+
+### Compile code
+
+> GOOS=windows GOARCH=amd64 go build -o bin/windows/seriesPlanner.exe seriesPlanner.go
+> GOOS=linux GOARCH=amd64 go build -o bin/linux/seriesPlanner seriesPlanner.go
+> GOOS=darwin GOARCH=amd64 go build -o bin/macos/seriesPlanner seriesPlanner.go
