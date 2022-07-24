@@ -6,12 +6,19 @@ _GO project_
 ### TODO
 
 [x] Run sP (get list of shows, update Notion with new episodes)
+
 [x] List Shows
+
 [x] Add Shows
+
 [x] Edit Show (last season and episode tracked)
+
 [x] Remove Show
+
 [x] Manage Settings (list of api keys and notion database id)
+
 [ ] Make it cross-season (if you set season 1 and its on season 3 it should get all episodes from S1 to S3)
+
 
 ### Requirements
 
