@@ -5,19 +5,19 @@ _GO project_
 
 ### TODO
 
-[x] Run sP (get list of shows, update Notion with new episodes)
+    [x] Run sP (get list of shows, update Notion with new episodes)
 
-[x] List Shows
+    [x] List Shows
 
-[x] Add Shows
+    [x] Add Shows
 
-[x] Edit Show (last season and episode tracked)
+    [x] Edit Show (last season and episode tracked)
 
-[x] Remove Show
+    [x] Remove Show
 
-[x] Manage Settings (list of api keys and notion database id)
+    [x] Manage Settings (list of api keys and notion database id)
 
-[ ] Make it cross-season (if you set season 1 and its on season 3 it should get all episodes from S1 to S3)
+    [ ] Make it cross-season (if you set season 1 and its on season 3 it should get all episodes from S1 to S3)
 
 
 ### Requirements
@@ -31,5 +31,7 @@ _GO project_
 ### Compile code
 
 > GOOS=windows GOARCH=amd64 go build -o bin/windows/seriesPlanner.exe seriesPlanner.go
+
 > GOOS=linux GOARCH=amd64 go build -o bin/linux/seriesPlanner seriesPlanner.go
+
 > GOOS=darwin GOARCH=amd64 go build -o bin/macos/seriesPlanner seriesPlanner.go
