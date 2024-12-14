@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	Version     = 0.1
+	Version     = 0.2
 	colorRed    = "\033[31m"
 	colorGreen  = "\033[32m"
 	colorYellow = "\033[33m"
@@ -391,14 +391,19 @@ func run() {
 		_, _, _, result := moviedb.GetInfo(strconv.Itoa(show.Show_id), false, _config_moviedb_key)
 
 		update_show := 0
+		current_s := 0
 		for _, ep := range result {
-			if ep.Episode_number > show.Episode {
+			cuSE, _ := strconv.Atoi(fmt.Sprintf("%d%d", ep.Season_number, ep.Episode_number))
+			savedSE, _ := strconv.Atoi(fmt.Sprintf("%s%d", show.Season, show.Episode))
+
+			if cuSE > savedSE {
 				fmt.Println("Add show on date " + ep.Air_date)
 				//Add to notion
-				res := notion.Add(show.Show_name, show.Season, strconv.Itoa(ep.Episode_number), ep.Air_date, _config_notion_db, _config_notion_key)
+				res := notion.Add(show.Show_name, strconv.Itoa(ep.Season_number), strconv.Itoa(ep.Episode_number), ep.Air_date, _config_notion_db, _config_notion_key)
 				if res {
 					fmt.Println(colorGreen + "Show added" + boldEnd)
 					update_show = ep.Episode_number
+					current_s = ep.Season_number
 
 				} else {
 					fmt.Println(colorRed + "Show not added" + boldEnd)
@@ -407,7 +412,7 @@ func run() {
 		}
 		if update_show > 0 {
 			// Update local db
-			update_response := db.UpdateShow(show.Show_id, "Episode", strconv.Itoa(update_show))
+			update_response := db.UpdateShowSE(show.Show_id, strconv.Itoa(current_s), strconv.Itoa(update_show))
 			if update_response {
 				fmt.Println(colorGreen + "Show updated with success in SeriesPlanner." + boldEnd)
 			} else {

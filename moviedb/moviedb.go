@@ -21,6 +21,7 @@ type ShowInfo struct {
 type Episode struct {
 	Air_date       string
 	Episode_number int
+	Season_number int
 }
 
 type SeasonInfo struct {

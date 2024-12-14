@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-
+	"strconv"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -41,6 +41,7 @@ type LastEpisodes struct {
 	Show_name string
 	Season    string
 	Episode   int
+	Se int
 }
 
 var user_dir = ""
@@ -59,7 +60,8 @@ func AddShow(show_id int, show_name string, season string) string {
 		panic("failed to connect database")
 	}
 	db.AutoMigrate(&LastEpisodes{})
-	db.Create(&LastEpisodes{Show_id: show_id, Show_name: show_name, Season: season, Episode: 0})
+	se, _ := strconv.Atoi(fmt.Sprintf("%d%d", season, 0))
+	db.Create(&LastEpisodes{Show_id: show_id, Show_name: show_name, Season: season, Episode: 0, Se: se})
 	return "Show " + show_name + " Added"
 }
 
@@ -212,5 +214,20 @@ func UpdateShow(show_id int, key string, value string) bool {
 	var ep LastEpisodes
 	db.First(&ep, "show_id = ?", show_id)
 	db.Model(&ep).Update(key, value)
+
+	db.Exec("UPDATE last_episodes SET se = season || episode")
+	return true
+}
+
+func UpdateShowSE(show_id int, season string, episode string) bool {
+	db, err := gorm.Open(sqlite.Open(user_dir+".seriesPlanner.local.db"), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+	var ep LastEpisodes
+	db.First(&ep, "show_id = ?", show_id)
+	db.Model(&ep).Update("season", season)
+	db.Model(&ep).Update("episode", episode)
+	db.Exec("UPDATE last_episodes SET se = season || episode")
 	return true
 }
